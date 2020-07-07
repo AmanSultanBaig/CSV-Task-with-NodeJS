@@ -48,4 +48,4 @@ app.post('/upload-csv', uploads.single('csv'), (req, res) => {
 
 //assign port  
 let port = process.env.PORT || 3000;
-app.listen(port, () => console.log('server run at port ' + port)); 
+app.listen(port, __ => console.log(`server run at port ${port}`)); 
