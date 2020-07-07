@@ -1,59 +1,51 @@
-const fs = require('fs');
-const multer = require('multer');
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const productModel = require('./models/product.model');
+const csv = require('csvtojson');
+const bodyParser = require('body-parser');
+const productController = require('./controllers/productController')
 
-let MongoClient = require('mongodb').MongoClient;
-let url = "mongodb://localhost:27017/";
+require('./config/db.config')
 
-const csv = require('csvtojson')
-
-const app = express();
-
-global.__basedir = __dirname;
-
-// -> Multer Upload Storage
-const storage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __basedir + '/uploads/')
+        cb(null, './public/uploads');
     },
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname)
+        cb(null, file.originalname);
     }
 });
 
-const upload = multer({ storage: storage });
+let uploads = multer({ storage: storage });
 
-// -> Express Upload RestAPIs
-app.post('/api/uploadfile', upload.single("uploadfile"), (req, res) => {
-    importCsvData2MongoDB(__basedir + '/uploads/' + req.file.filename);
-    res.json({
-        'msg': 'File uploaded/import successfully!', 'file': req.file
-    });
+//init app  
+let app = express();
+
+//fetch data from the request  
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//static folder  
+app.use(express.static(path.resolve(__dirname, 'public')));
+app.use('/api', productController)
+
+app.post('/upload-csv', uploads.single('csv'), (req, res) => {
+    //convert csvfile to jsonArray     
+    csv()
+        .fromFile(req.file.path)
+        .then((jsonObj) => {
+            //insertmany is used to save bulk data in database.
+            //saving the data in collection(table)
+            productModel.insertMany(jsonObj, (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect('/');
+                }
+            });
+        });
 });
 
-// -> Import CSV File to MongoDB database
-function importCsvData2MongoDB(filePath) {
-    csv()
-        .fromFile(filePath)
-        .then((jsonObj) => {
-            console.log(jsonObj);
-            // Insert Json-Object to MongoDB
-            MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-                if (err) throw err;
-                let dbo = db.db("testDB");
-                dbo.collection("customers").insertMany(jsonObj, (err, res) => {
-                    if (err) throw err;
-                    console.log("Number of documents inserted: " + res.insertedCount);
-                    /**
-                        Number of documents inserted: 5
-                    */
-                    db.close();
-                });
-            });
-
-            fs.unlinkSync(filePath);
-        })
-}
-
-// Create a Server
-app.listen(8080, __ => console.log("App is Running"))
+//assign port  
+let port = process.env.PORT || 3000;
+app.listen(port, () => console.log('server run at port ' + port)); 
