@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //static folder  
 app.use(express.static(path.resolve(__dirname, 'public')));
-app.use('/api', productController)
+app.use('/', productController)
 
 app.post('/upload-csv', uploads.single('csv'), (req, res) => {
     //convert csvfile to jsonArray     
@@ -38,9 +38,12 @@ app.post('/upload-csv', uploads.single('csv'), (req, res) => {
             //saving the data in collection(table)
             productModel.insertMany(jsonObj, (err, data) => {
                 if (err) {
-                    console.log(err);
+                    console.log(`Error occur from FILE System, error: ${err}`)
                 } else {
-                    res.redirect('/');
+                    res.status(200).json({
+                        message: 'File Uploaded Successfully!',
+                        result: data
+                    })
                 }
             });
         });

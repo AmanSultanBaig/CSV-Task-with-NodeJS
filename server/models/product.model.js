@@ -27,4 +27,4 @@ var csvSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('record', csvSchema);
+module.exports = mongoose.model('csvRecords', csvSchema);
