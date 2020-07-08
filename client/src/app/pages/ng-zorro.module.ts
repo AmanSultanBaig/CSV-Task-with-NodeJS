@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AllProductsComponent } from './products/all-products/all-products.component';
 import { ViewProductComponent } from './products/view-product/view-product.component';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
 
 // ant design modules imports
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
@@ -11,7 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { AppRoutingModule } from '../app-routing.module';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { AppRoutingModule } from '../app-routing.module';
     NzCardModule,
     NzButtonModule,
     NzTableModule,
-
+    NzBreadCrumbModule
   ]
 })
 export class NgZorroModule { }

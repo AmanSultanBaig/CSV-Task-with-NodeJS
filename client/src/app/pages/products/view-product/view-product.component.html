@@ -1,1 +1,28 @@
-<p>view-product works!</p>
+<div class="container">
+
+    <nz-breadcrumb class="mt-5">
+        <nz-breadcrumb-item>
+            <a [routerLink]="['/all-products']">Back</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+            {{product.name}}
+        </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <img src="{{product.image}}" class="img-responsive img-thumbnail" style="height: 400px; width: 100%" alt="Image not Loaded">
+        </div>
+        <div class="col-md-8">
+            <h3>{{ product.name }}</h3>
+            <b>Description:</b>
+            <p>{{ product.description}}</p>
+            <hr>
+            <b>Price:</b>
+            <p>{{ product.price +' '+ product.currency }}</p>
+            <hr>
+            <b>Website:</b>
+            <a class="ml-2" target="blank" href="{{product.link}}">Go To Website</a>
+        </div>
+    </div>
+</div>
