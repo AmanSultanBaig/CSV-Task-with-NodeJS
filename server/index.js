@@ -1,11 +1,11 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const productModel = require('./models/product.model');
 const csv = require('csvtojson');
 const bodyParser = require('body-parser');
-const productController = require('./controllers/productController')
 
+const productModel = require('./models/product.model');
+const productController = require('./controllers/productController')
 require('./config/db.config')
 
 let storage = multer.diskStorage({
@@ -27,6 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //static folder  
 app.use(express.static(path.resolve(__dirname, 'public')));
+
+// enable CORS 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.use('/', productController)
 
 app.post('/upload-csv', uploads.single('csv'), (req, res) => {

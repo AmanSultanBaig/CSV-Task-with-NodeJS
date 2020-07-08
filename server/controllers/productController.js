@@ -11,7 +11,7 @@ router.get('/read-csv', (req, res) => {
             })
         })
         .catch(err => {
-            res.status(403).json({
+            res.status(401).json({
                 message: "read-csv file Error",
                 error: err
             })

@@ -1,5 +1,5 @@
 footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 4rem;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #3931af);
