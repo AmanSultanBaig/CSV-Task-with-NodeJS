@@ -10,7 +10,7 @@ Before Running this project you need to follow few step which are required to ex
 ## Sever
 
 After clone this project go to `Server` Folder with This cmd : `cd server` & run This cmd `npm i` or `npm install`, it will install all necessary packages which are
-required to execute server application with their given version in `package.json`
+required to execute server application with their given version in `package.json`, after completing installation, run `npm start`, to `serve` server application,   
 
 ## Database Info
 
@@ -19,4 +19,4 @@ You have to create DB with name of `CSV-DB` or If you want to create your own DB
 ## Client 
 
 For frontend you need to go `Client` Folder with This cmd: `cd client` & run this `npm i` or `npm install`, it will install all necessary packages which are
-required to execute client application with their given version in `package.json`
+required to execute client application with their given version in `package.json`, after completing installation, run `ng serve --open` or `ng serve -o`, to `serve` client application,   
