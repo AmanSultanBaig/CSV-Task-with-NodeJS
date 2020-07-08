@@ -10,12 +10,22 @@ export class RestApiService {
 
   constructor(private http: HttpClient) { }
 
+  // *************************
+  // All Products Api's Endpoints
+  // *************************
+
+  // getting all products endpoint
   getAllProducts() {
     return this.http.get(this.localhost + 'read-csv')
   }
 
+  // get product by id endpoint
   getProductById(id) {
     return this.http.get(this.localhost + `product/${id}`)
   }
 
+  // upload csv file endpoint
+  uploadCsv(file) {
+    return this.http.post(this.localhost + `upload-csv`, file)
+  }
 }

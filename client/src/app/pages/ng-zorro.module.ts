@@ -13,6 +13,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
     NzCardModule,
     NzButtonModule,
     NzTableModule,
-    NzBreadCrumbModule
+    NzBreadCrumbModule,
+    NzModalModule
   ]
 })
 export class NgZorroModule { }

@@ -46,7 +46,9 @@ app.post('/upload-csv', uploads.single('csv'), (req, res) => {
             //saving the data in collection(table)
             productModel.insertMany(jsonObj, (err, data) => {
                 if (err) {
-                    console.log(`Error occur from FILE System, error: ${err}`)
+                    res.status(400).json({
+                        message: 'There is some error to Uploading CSV!',
+                    })
                 } else {
                     res.status(200).json({
                         message: 'File Uploaded Successfully!',

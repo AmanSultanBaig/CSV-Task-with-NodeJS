@@ -10,6 +10,8 @@ import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 export class AllProductsComponent implements OnInit {
   Products: any = [];
   searchProduct
+  isVisible: boolean = false;
+  selectedFile: File = null;
   constructor(private api: RestApiService, private displayError: NzNotificationService) { }
 
   gridStyle = {
@@ -17,11 +19,11 @@ export class AllProductsComponent implements OnInit {
     textAlign: 'center'
   };
 
-
   ngOnInit(): void {
     this.getProducts()
   }
 
+  // getting all products
   getProducts() {
     this.api.getAllProducts().subscribe(res => {
       this.Products = res;
@@ -35,6 +37,7 @@ export class AllProductsComponent implements OnInit {
       })
   }
 
+  // searching product by its name
   searchByName() {
     if (this.searchProduct == "") {
       return this.getProducts()
@@ -45,9 +48,52 @@ export class AllProductsComponent implements OnInit {
     }
   }
 
-  resetSearchBox(){
+  // reset after search result found
+  resetSearchBox() {
     this.searchProduct = "";
     return this.getProducts();
+  }
+
+  // getting selected file and store it
+  onSelectedFile(event) {
+    this.selectedFile = <File>event.target.files[0]
+  }
+
+  // open model
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  // close model
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  addFile() {
+    // uploading file logic
+    if (this.selectedFile == null) {
+      this.displayError.create(
+        'error', 'Error', 'Select file first!',
+      )
+    }
+    else {
+      const formData = new FormData();
+      formData.append('csv', this.selectedFile, this.selectedFile.name);
+      this.api.uploadCsv(formData).subscribe((res: any) => {
+        this.displayError.create(
+          'success', 'Success', res.message,
+        );
+        this.handleCancel()
+        setTimeout(() => {
+          location.reload()
+        }, 1000);
+      }),
+        ((err: any) => {
+          this.displayError.create(
+            'error', 'Error', err.message,
+          )
+        })
+    }
   }
 
 }
