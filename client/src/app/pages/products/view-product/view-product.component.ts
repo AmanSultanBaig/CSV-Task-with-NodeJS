@@ -18,6 +18,7 @@ export class ViewProductComponent implements OnInit {
     this.getProductById()
   }
 
+  // show product by id 
   getProductById(){
     this.api.getProductById(this.productId).subscribe(res => {
       this.product = res;
