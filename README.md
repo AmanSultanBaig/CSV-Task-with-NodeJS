@@ -19,4 +19,6 @@ You have to create DB with name of `CSV-DB` or If you want to create your own DB
 ## Client 
 
 For frontend you need to go `Client` Folder with This cmd: `cd client` & run this `npm i` or `npm install`, it will install all necessary packages which are
-required to execute client application with their given version in `package.json`, after completing installation, run `ng serve --open` or `ng serve -o`, to `serve` client application,   
+required to execute client application with their given version in `package.json`, after completing installation, run `ng serve --open` or `ng serve -o`, to `serve` client application.
+
+If you want to watch the demo before clone this project for just checking that how this project would look like so, you can watch this project video uploaded on my `YouTube Channel` and the link is here: [CSV Project with Mean Stack](https://www.youtube.com/watch?v=9nnBhgi28Tk)
