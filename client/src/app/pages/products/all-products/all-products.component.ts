@@ -85,7 +85,8 @@ export class AllProductsComponent implements OnInit {
         );
         this.handleCancel()
         setTimeout(() => {
-          location.reload()
+          // location.reload()
+          this.getProducts()
         }, 1000);
       }),
         ((err: any) => {
