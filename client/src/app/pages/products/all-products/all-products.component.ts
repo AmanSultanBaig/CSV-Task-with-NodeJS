@@ -13,6 +13,7 @@ export class AllProductsComponent implements OnInit {
   isVisible: boolean = false;
   selectedFile: File = null;
   constructor(private api: RestApiService, private displayError: NzNotificationService) { }
+  loading: boolean = true;
 
   gridStyle = {
     width: '25%',
@@ -28,7 +29,9 @@ export class AllProductsComponent implements OnInit {
     this.api.getAllProducts().subscribe(res => {
       this.Products = res;
       this.Products = this.Products.result
-      console.log(this.Products)
+      setTimeout(() => {
+        this.loading = false
+      }, 1000);
     }),
       (err => {
         this.displayError.create(
@@ -85,8 +88,11 @@ export class AllProductsComponent implements OnInit {
         );
         this.handleCancel()
         setTimeout(() => {
-          // location.reload()
+          this.loading = true
           this.getProducts()
+          setTimeout(() => {
+            this.loading = false
+          }, 1000);
         }, 1000);
       }),
         ((err: any) => {
